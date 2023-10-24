@@ -45,8 +45,8 @@ const JobModal = ({ onClose, data, modalIndex, isOpen }) => {
   let applicationFilled = false;
 
   let userDetails;
-  if (JSON.parse(storedUserData).newSavedUser) {
-    userDetails = JSON.parse(storedUserData).newSavedUser;
+  if (JSON.parse(storedUserData)?.newSavedUser && userDetails !== null) {
+    userDetails = JSON.parse(storedUserData)?.newSavedUser;
   } else {
     userDetails = JSON.parse(storedUserData);
   }
@@ -78,7 +78,7 @@ const JobModal = ({ onClose, data, modalIndex, isOpen }) => {
   }, []);
 
   const handleJobApply = async () => {
-    if (isLoggedIn === "false") {
+    if (isLoggedIn === "false" || userDetails===null) {
       navigation("/login");
     } else {
       dispatch(loadingReducer(true));
@@ -114,7 +114,6 @@ const JobModal = ({ onClose, data, modalIndex, isOpen }) => {
       const res = await axios.get(
         `https://job-portal-api-m1ml.onrender.com/api/jobs/getJobApplicationByJobId/${data._id}`
       );
-      // console.log(res.data)
       dispatch(jobApplicationReducer(res.data));
       setFetchJobSuccess("success");
     } catch (err) {
@@ -141,7 +140,7 @@ const JobModal = ({ onClose, data, modalIndex, isOpen }) => {
   function compareObject(application, data, userDetails) {
     if (
       application?.job?._id === data._id &&
-      userDetails._id === application.user
+      userDetails?._id === application?.user
     )
       return true;
     else return false;

@@ -18,8 +18,8 @@ const MyApplication = () => {
   const storedUserData = localStorage.getItem("userData");
 
   let userDetails;
-  if (JSON.parse(storedUserData).newSavedUser) {
-    userDetails = JSON.parse(storedUserData).newSavedUser;
+  if (JSON.parse(storedUserData)?.newSavedUser) {
+    userDetails = JSON.parse(storedUserData)?.newSavedUser;
   } else {
     userDetails = JSON.parse(storedUserData);
   }
